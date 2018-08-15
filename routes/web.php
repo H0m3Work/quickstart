@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +13,37 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $links = \App\Models\Link::all();
+
+    return view('welcome', ['links' => $links]);
 });
+
+Route::get('/submit', function () {
+	return view('submit');
+});
+
+Route::post('/submit', function (Request $request) {
+    $data = $request->validate([
+        'title' => 'required|max:255',
+        'url' => 'required|url|max:255',
+        'description' => 'required|max:255',
+    ]);
+
+    $link = tap(new App\Models\Link($data))->save();
+
+    return redirect('/');
+});
+
+Route::namespace('Admin')->group(function () {
+    Route::get('excel', [
+        'uses' => 'LinkController@excelPage'
+    ]);
+
+    Route::get('downloadExcel/{type}', [
+        'uses' => 'LinkController@downloadExcel'
+    ]);
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
