@@ -27,6 +27,14 @@ class LinksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithE
         ];
     }
 
+    public function columnFormats(): array 
+    {
+    	return [
+    		'E' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+    		'F' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+    	];
+    }
+
     public function registerEvents(): array
     {
         return [
@@ -34,18 +42,6 @@ class LinksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithE
                 $cellRange = 'A1:W1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
                 $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-
-                // $event->sheet->styleCells(
-                //     'A2:F58',
-                //     [
-                //         'borders' => [
-                //             'outline' => [
-                //                 'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                //                 'color' => ['argb' => 'FFFF0000'],
-                //             ],
-                //         ]
-                //     ]
-                // );
             },
         ];
     }
