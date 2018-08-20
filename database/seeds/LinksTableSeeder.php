@@ -11,6 +11,8 @@ class LinksTableSeeder extends Seeder
      */
     public function run()
     {
+    	Illuminate\Database\Eloquent\Model::reguard();
+    	
         factory(App\Models\Link::class, 50)->create();
     }
 }

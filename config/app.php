@@ -163,6 +163,9 @@ return [
         // Excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        // Repositories 
+        App\Providers\LinkServiceProvider::class,
+
     ],
 
     /*

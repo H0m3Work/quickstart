@@ -82,16 +82,16 @@
                     Laravel
                 </div>
 
-                <div class="links">
+                {{-- <div class="links">
                     @foreach ($links as $link)
                         <p>
                             <a href="{{ $link->url }}">{{ $link->title }}</a>
                         </p>
                     @endforeach
-                </div>
+                </div> --}}
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
+                    <a href="{{ asset('links') }}">Links</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>

@@ -8,22 +8,54 @@ use App\Models\Link;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LinksExport;
 use App\Exports\InvoicesExport;
-use Illuminate\Support\Collection;
+use App\Repositories\Link\LinkRepositoryInterface;
 
 class LinkController extends Controller
 {
-	public function excelPage()
+	protected $linkRepository;
+
+	public function __construct(LinkRepositoryInterface $linkRepository)
 	{
-		return view('excel');
+		$this->linkRepository = $linkRepository;
 	}
 
-    public function downloadExcel($type)
+	public function index()
+	{
+		$links = $this->linkRepository->getAllLinks($id = false, $title = true);
+		return view('links.index', compact('links'));
+	}
+
+	public function excel()
+	{
+		return view('links._excel');
+	}
+
+	public function import()
+	{
+		return ;
+	}
+
+    public function download()
 	{
 		return Excel::download(new LinksExport, 'links.xlsx');
-		// return (new Collection(Link::all()))->downloadExcel(
-		// 	'links.xlsx',
-		// 	$writerType = null,
-		// 	$headings = true
-		// );
+	}
+
+	public function create()
+	{
+		return view('links._add');
+	}
+
+	public function store(Request $request) 
+	{
+		$data = $request->all();
+		$this->linkRepository->create($data);
+		
+		return redirect(route('links'));
+	}
+
+	public function destroy($id) 
+	{
+		
+		return redirect(route('links'));
 	}
 }

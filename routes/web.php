@@ -18,29 +18,35 @@ Route::get('/', function () {
     return view('welcome', ['links' => $links]);
 });
 
-Route::get('/submit', function () {
-	return view('submit');
-});
-
-Route::post('/submit', function (Request $request) {
-    $data = $request->validate([
-        'title' => 'required|max:255',
-        'url' => 'required|url|max:255',
-        'description' => 'required|max:255',
-    ]);
-
-    $link = tap(new App\Models\Link($data))->save();
-
-    return redirect('/');
-});
-
 Route::namespace('Admin')->group(function () {
-    Route::get('excel', [
-        'uses' => 'LinkController@excelPage'
+    Route::get('links', [
+        'uses' => 'LinkController@index',
+        'as' => 'links'
     ]);
 
-    Route::get('downloadExcel/{type}', [
-        'uses' => 'LinkController@downloadExcel'
+    Route::get('excel', [
+        'uses' => 'LinkController@excel',
+        'as' => 'links.excel'
+    ]);
+
+    Route::get('links/download', [
+        'uses' => 'LinkController@download',
+        'as' => 'links.download'
+    ]);
+
+    Route::get('links/import', [
+        'uses' => 'LinkController@import',
+        'as' => 'links.import'
+    ]);
+
+    Route::get('links/create', [
+    'uses' => 'LinkController@create',
+    'as' => 'links.create'
+    ]);
+
+    Route::post('links/store', [
+        'uses' => 'LinkController@store',
+        'as' => 'links.store'
     ]);
 });
 

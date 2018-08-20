@@ -23,8 +23,9 @@ class LinkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->bind(LinkController::class, function() {
-        //     return new LinkController($this->app['excel']);
-        // });
+        $this->app->singleton(
+            \App\Repositories\Link\LinkRepositoryInterface::class,
+            \App\Repositories\Link\Eloquent\LinkEloquentRepository::class
+        );
     }
 }
